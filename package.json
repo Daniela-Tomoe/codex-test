@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "bun run --bun next dev",
-    "build": "bun run --bun next build",
+    "dev": "bun run --bun next dev --webpack",
+    "build": "bun run --bun next build --webpack",
     "start": "bun run --bun next start",
     "db:migrate": "bun run scripts/migrate.ts",
     "lint": "oxlint",
@@ -12,6 +12,7 @@
     "commit": "cz"
   },
   "dependencies": {
+    "better-auth": "1.6.23",
     "next": "16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
