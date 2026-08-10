@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conventional Commits"
+  short_description: "Create safe, atomic Conventional Commits"
+  default_prompt: "Use $conventional-commits to inspect the current changes and create safe, atomic commits following Conventional Commits."
