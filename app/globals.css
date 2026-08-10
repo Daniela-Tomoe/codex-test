@@ -3,6 +3,11 @@
 :root {
   --background: #f8fffe;
   --foreground: #0f172a;
+  --aqua-50: #f0fdfa;
+  --aqua-100: #ccfbf1;
+  --aqua-600: #0d9488;
+  --aqua-700: #0f766e;
+  --aqua-950: #042f2e;
 }
 
 @theme inline {
@@ -12,7 +17,127 @@
 }
 
 body {
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+button,
+a,
+input,
+[contenteditable="true"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tiptap {
+  min-height: 28rem;
+  padding: 2rem;
+  color: #1e293b;
+  line-height: 1.75;
+  outline: none;
+  overflow-wrap: anywhere;
+}
+
+.tiptap > * + * {
+  margin-top: 0.85em;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3 {
+  color: #0f172a;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.tiptap h1 {
+  font-size: 2rem;
+}
+
+.tiptap h2 {
+  font-size: 1.5rem;
+}
+
+.tiptap h3 {
+  font-size: 1.25rem;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.6rem;
+}
+
+.tiptap ul {
+  list-style: disc;
+}
+
+.tiptap ol {
+  list-style: decimal;
+}
+
+.tiptap li + li {
+  margin-top: 0.3rem;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid var(--aqua-600);
+  padding-left: 1rem;
+  color: #475569;
+}
+
+.tiptap a {
+  color: var(--aqua-700);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.tiptap code {
+  border-radius: 0.35rem;
+  background: #ecfdf5;
+  padding: 0.12rem 0.35rem;
+  color: #115e59;
+  font-size: 0.9em;
+}
+
+.tiptap pre {
+  overflow-x: auto;
+  border-radius: 0.9rem;
+  background: #0f172a;
+  padding: 1rem 1.1rem;
+  color: #e2e8f0;
+}
+
+.tiptap pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.tiptap hr {
+  margin-block: 1.75rem;
+  border: 0;
+  border-top: 1px solid #ccfbf1;
+}
+
+.tiptap p:first-child:last-child:has(> br.ProseMirror-trailingBreak)::before {
+  float: left;
+  height: 0;
+  color: #94a3b8;
+  content: "Start writing your note…";
+  pointer-events: none;
+}
+
+.tiptap ::selection {
+  background: var(--aqua-100);
+}
+
+@media (max-width: 640px) {
+  .tiptap {
+    min-height: 22rem;
+    padding: 1.25rem;
+  }
 }
