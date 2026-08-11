@@ -150,13 +150,18 @@ describe("NoteEditor", () => {
     expect(screen.getByRole("button", { name: "Create note" })).toHaveProperty("disabled", false);
   });
 
-  it("debounces edits and persists the latest draft", async () => {
+  it("persists the latest draft ten seconds after the first edit", async () => {
     render(<NoteEditor mode="edit" note={existingNote} />);
     fireEvent.change(screen.getByLabelText("Note title"), { target: { value: "Changed" } });
 
     expect(screen.getByRole("status").textContent).toBe("Unsaved changes");
     await act(async () => {
-      await vi.advanceTimersByTimeAsync(9_999);
+      await vi.advanceTimersByTimeAsync(5_000);
+    });
+    fireEvent.change(screen.getByLabelText("Note title"), { target: { value: "Latest" } });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(4_999);
     });
     expect(mocks.updateNoteAction).not.toHaveBeenCalled();
 
@@ -167,7 +172,7 @@ describe("NoteEditor", () => {
     expect(mocks.updateNoteAction).toHaveBeenCalledWith({
       contentJson: EMPTY_NOTE_CONTENT,
       id: "note-1",
-      title: "Changed",
+      title: "Latest",
     });
     expect(screen.getByRole("status").textContent).toBe("Saved");
   });
@@ -182,7 +187,7 @@ describe("NoteEditor", () => {
     expect(screen.getByRole("status").textContent).toBe("Saved");
   });
 
-  it("immediately follows an in-flight save with the newest draft", async () => {
+  it("persists edits made during a save on the next autosave interval", async () => {
     let resolveFirstSave: ((value: { data: { updatedAt: string } }) => void) | undefined;
     mocks.updateNoteAction
       .mockImplementationOnce(
@@ -202,6 +207,11 @@ describe("NoteEditor", () => {
       resolveFirstSave?.({ data: { updatedAt: "2026-08-11T11:00:00.000Z" } });
       await Promise.resolve();
     });
+
+    expect(mocks.updateNoteAction).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("status").textContent).toBe("Unsaved changes");
+
+    await advanceAutosave();
 
     expect(mocks.updateNoteAction).toHaveBeenCalledTimes(2);
     expect(mocks.updateNoteAction).toHaveBeenLastCalledWith({

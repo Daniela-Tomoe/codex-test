@@ -106,11 +106,10 @@ export function NoteEditor(props: NoteEditorProps) {
   }
 
   function scheduleAutosave() {
-    if (props.mode !== "edit") {
+    if (props.mode !== "edit" || autosaveTimerRef.current !== null) {
       return;
     }
 
-    clearAutosaveTimer();
     autosaveTimerRef.current = setTimeout(() => {
       void persistLatestDraft();
     }, autosaveDelayMilliseconds);
@@ -196,10 +195,12 @@ export function NoteEditor(props: NoteEditorProps) {
 
       if (currentSnapshotRef.current !== snapshot.serialized) {
         hasUnsavedChangesRef.current = true;
-        setSaveStatus("saving");
-        return persistLatestDraft();
+        setSaveStatus("unsaved");
+        scheduleAutosave();
+        return true;
       }
 
+      clearAutosaveTimer();
       hasUnsavedChangesRef.current = false;
       setSaveStatus("saved");
       setSaveError(null);
@@ -447,7 +448,7 @@ export function NoteEditor(props: NoteEditorProps) {
 
           <p className="text-xs leading-5 text-slate-500">
             {props.mode === "edit"
-              ? "Changes save automatically after 10 seconds of inactivity."
+              ? "Changes save automatically every 10 seconds."
               : "Create the note when your first draft is ready."}
           </p>
         </footer>
