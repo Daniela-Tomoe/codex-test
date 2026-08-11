@@ -34,5 +34,29 @@ password credentials; password reset and email verification are intentionally un
 bun run format
 bun run lint
 bun tsc --noEmit
+bun run test
+bun run test:e2e
 bun run build
 ```
+
+## Testing
+
+Unit and component tests use Vitest with React Testing Library. Run them once or in watch
+mode:
+
+```bash
+bun run test
+bun run test:watch
+```
+
+End-to-end tests use Playwright against a production Next.js build and an isolated SQLite
+database at `data/tinynotes-e2e.db`. Install the browser binaries once, then run the suite:
+
+```bash
+bunx playwright install
+bun run test:e2e
+```
+
+Playwright resets only the dedicated E2E database before each run. It never reads or modifies
+the development database configured in `.env.local`. Use `bun run test:e2e:ui` for Playwright's
+interactive runner, or `bun run test:all` to run both suites.
