@@ -14,7 +14,7 @@ import {
   type OwnedNote,
 } from "@/src/lib/note-contracts";
 
-const autosaveDelayMilliseconds = 1_000;
+const autosaveDelayMilliseconds = 10_000;
 
 type SaveStatus = "error" | "idle" | "saved" | "saving" | "unsaved";
 
@@ -447,7 +447,7 @@ export function NoteEditor(props: NoteEditorProps) {
 
           <p className="text-xs leading-5 text-slate-500">
             {props.mode === "edit"
-              ? "Changes save automatically after a short pause."
+              ? "Changes save automatically after 10 seconds of inactivity."
               : "Create the note when your first draft is ready."}
           </p>
         </footer>

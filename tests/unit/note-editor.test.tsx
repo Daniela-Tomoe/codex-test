@@ -76,7 +76,7 @@ function updateEditorContent(contentJson: object) {
 
 async function advanceAutosave() {
   await act(async () => {
-    await vi.advanceTimersByTimeAsync(1_000);
+    await vi.advanceTimersByTimeAsync(10_000);
   });
 }
 
@@ -156,7 +156,7 @@ describe("NoteEditor", () => {
 
     expect(screen.getByRole("status").textContent).toBe("Unsaved changes");
     await act(async () => {
-      await vi.advanceTimersByTimeAsync(999);
+      await vi.advanceTimersByTimeAsync(9_999);
     });
     expect(mocks.updateNoteAction).not.toHaveBeenCalled();
 
