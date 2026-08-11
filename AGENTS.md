@@ -5,6 +5,8 @@
 - ALWAYS run `bun run format` AFTER you're done with your task and you edited all files that needed editing
 - ALWAYS run `bun run lint` after making any changes => fix any linting errors you get
 - ALWAYS check for type errors via `bun tsc --noEmit`
+- ALWAYS run unit tests via `bun run test`
+- ALWAYS run e2e tests via `bun run test:e2e`
 
 ## Project Structure & Module Organization
 
