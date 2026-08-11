@@ -96,8 +96,6 @@ export async function updateNoteAction(
       return { error: { code: "NOT_FOUND", message: "This note could not be found." } };
     }
 
-    revalidatePath("/notes");
-    revalidatePath(`/notes/${input.id}`);
     return { data: note };
   } catch (error) {
     console.error("Failed to update note", error);

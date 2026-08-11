@@ -135,7 +135,7 @@ describe("note server actions", () => {
       });
     });
 
-    it("supports partial updates and revalidates both affected routes", async () => {
+    it("supports partial updates without revalidating routes during autosave", async () => {
       mocks.updateOwnedNote.mockReturnValue({ updatedAt: "2026-08-11T11:00:00.000Z" });
 
       const result = await updateNoteAction({ id: "note-1", title: "Changed" });
@@ -147,7 +147,7 @@ describe("note server actions", () => {
         title: "Changed",
         userId: "user-1",
       });
-      expect(mocks.revalidatePath.mock.calls).toEqual([["/notes"], ["/notes/note-1"]]);
+      expect(mocks.revalidatePath).not.toHaveBeenCalled();
     });
 
     it("serializes content updates", async () => {
