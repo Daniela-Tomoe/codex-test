@@ -45,3 +45,9 @@ Run `bun run lint && bun run build` before opening a PR.
 - Do not commit secrets; use environment variables for sensitive values.
 - Keep error messages generic in UI-facing code.
 - Validate changes against `SPEC.MD` before implementation.
+
+## Playwright MCP Test Account
+
+- When using Playwright MCP, always reuse the test account stored in `playwright/.auth/test-user.json`.
+- Do not create ad hoc accounts when this shared test account is available.
+- Keep the credentials file local and uncommitted; `playwright/.auth/` is ignored by Git.
